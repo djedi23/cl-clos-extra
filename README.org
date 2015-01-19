@@ -2,6 +2,22 @@
 
 ** Usage
 
+#+BEGIN_SRC lisp
+  (ql:quickload :cl-clos-extra)
+
+  (defclass  ()
+      (a
+       b
+       (c :remove t)
+       (e :alias b))
+    (:metaclass clos-extra:extra-definition-slot-class))
+#+END_SRC
+
 ** Dependencies
 
 ** Installation
+
+Links cl-clos-extra.asd and cl-clos-extra-test.asd into $HOME/quicklisp/local-projects
+
+
+#+OPTIONS: toc:nil
