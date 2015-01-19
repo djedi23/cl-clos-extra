@@ -1,0 +1,30 @@
+(in-package :cl-clos-extra)
+
+
+(defclass aliasable-slot-class (standard-class) ())
+(defmethod sb-mop:validate-superclass ((class aliasable-slot-class) (superclass standard-class))  t)
+
+(defclass aliasable-slot-definition (sb-mop:standard-direct-slot-definition)
+  ((alias :initarg :alias :initform nil :reader slot-definition-alias)))
+(defclass aliasable-effective-slot-definition (sb-mop:standard-effective-slot-definition)
+  ((alias :initarg :alias :reader slot-definition-alias)))
+
+(defmethod sb-mop:direct-slot-definition-class ((class aliasable-slot-class) &rest initargs)
+  (declare (ignore initargs))
+  (find-class 'aliasable-slot-definition))
+(defmethod sb-mop:effective-slot-definition-class ((class aliasable-slot-class) &rest initargs)
+  (declare (ignore initargs))
+  (find-class 'aliasable-effective-slot-definition))
+(defmethod sb-mop:compute-effective-slot-definition ((class aliasable-slot-class) name slots)
+  (let ((slotd (call-next-method)))
+    (copy-slot-definition slotd 'alias slots)
+    slotd))
+
+(defmethod sb-mop:slot-value-using-class ((class aliasable-slot-class) object (slot aliasable-effective-slot-definition))
+  (if (slot-definition-alias slot)
+      (slot-value object (slot-definition-alias slot))
+      (call-next-method)))
+(defmethod (setf sb-mop:slot-value-using-class) (new-value (class aliasable-slot-class) object (slot aliasable-effective-slot-definition))
+  (if (slot-definition-alias slot)
+      (setf (slot-value object (slot-definition-alias slot)) new-value)
+      (call-next-method)))

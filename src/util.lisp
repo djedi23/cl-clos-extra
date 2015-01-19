@@ -1,0 +1,10 @@
+(in-package :cl-clos-extra)
+
+(defun copy-slot-definition (slotd name slots)
+  (when (slot-exists-p slotd name)
+    (setf (slot-value slotd name)
+	  (reduce #'(lambda (a b) (or a b))
+		  (mapcar #'(lambda (slot) (when (and (slot-exists-p slot name)
+						      (slot-boundp slot name))
+					     (slot-value slot name)))
+			  slots)))))
