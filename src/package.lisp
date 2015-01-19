@@ -5,4 +5,5 @@
   (:export
    aliasable-slot-class
    removable-slot-class
+   extra-definition-slot-class
    ))

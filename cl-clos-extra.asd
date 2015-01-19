@@ -18,6 +18,7 @@
 		 (:file "util" :depends-on ("package"))
 		 (:file "clos-alias" :depends-on ("package" "util"))
 		 (:file "clos-remove" :depends-on ("package" "util"))
+		 (:file "extra-definition" :depends-on ("clos-alias" "clos-remove"))
 		 )))
   :description ""
   :long-description
