@@ -5,12 +5,28 @@
 #+BEGIN_SRC lisp
   (ql:quickload :cl-clos-extra)
 
-  (defclass  ()
+  (defclass super ()
+    (c))
+
+  (defclass example (super)
       (a
        b
        (c :remove t)
        (e :alias b))
     (:metaclass clos-extra:extra-definition-slot-class))
+
+  (defparameter *b* (make-instance 'example))
+
+  (setf (slot-value b 'b) 5)
+  (slot-value b 'b) ;; 5
+  (slot-value b 'e) ;; 5
+
+  (setf (slot-value b 'e) 10)
+  (slot-value b 'b) ;; 10
+  (slot-value b 'e) ;; 10
+
+  (slot-value b 'c) ;; Error
+  (setf (slot-value b 'c) 10) ;; Error
 #+END_SRC
 
 ** Dependencies
