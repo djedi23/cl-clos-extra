@@ -16,7 +16,9 @@
                 :components
                 ((:file "package")
 		 (:file "util" :depends-on ("package"))
-		 (:file "clos-alias" :depends-on ("package" "util")))))
+		 (:file "clos-alias" :depends-on ("package" "util"))
+		 (:file "clos-remove" :depends-on ("package" "util"))
+		 )))
   :description ""
   :long-description
   #.(with-open-file (stream (merge-pathnames

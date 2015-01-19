@@ -3,4 +3,6 @@
   (:nicknames :clos-extra)
   (:use :cl)
   (:export
-   aliasable-slot-class))
+   aliasable-slot-class
+   removable-slot-class
+   ))
